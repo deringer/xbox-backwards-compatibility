@@ -85,8 +85,9 @@ class GamesCache
         sort($this->games);
 
         $cache = new \stdClass;
-        $cache->games  = $this->games;
-        $cache->recent = new \stdClass;
+        $cache->updated           = time();
+        $cache->games             = $this->games;
+        $cache->recent            = new \stdClass;
         $cache->recent->timestamp = ( count($this->recent) > 0 ) ? time() : $this->cache->recent->timestamp;
         $cache->recent->games     = ( count($this->recent) > 0 ) ? $this->recent : $this->cache->recent->games;
 

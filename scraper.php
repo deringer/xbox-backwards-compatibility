@@ -21,7 +21,9 @@ try {
     if ($titles = $scraper->scrape(getenv('XBOX_SITE_ENDPOINT'))) {
         $games->add($titles)->save();
 
-        printf('Successfully scraped endpoint for %d new games%s', count($cache->recent()), PHP_EOL);
+        if ($recent = $cache->recent()) {
+            printf('Successfully scraped endpoint for %d new games%s', count($recent), PHP_EOL);
+        }
     } else {
         printf('Could not scrape endpoint for new games%s', PHP_EOL);
     }
