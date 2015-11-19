@@ -42,7 +42,7 @@ class XboxGamesScraper
         $contents = @file_get_contents($url);
 
         if (! $contents) {
-            return new ScraperException(sprintf(
+            throw new ScraperException(sprintf(
                 'Could not reach the URL - %s - to scrape. Try again later.',
                 $url
             ));
