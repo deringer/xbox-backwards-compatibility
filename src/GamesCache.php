@@ -66,7 +66,7 @@ class GamesCache
      */
     public function gameExists($title)
     {
-        return ! is_null($this->cache) && in_array($title, $this->cache->games);
+        return in_array($title, $this->games);
     }
 
 
@@ -133,6 +133,7 @@ class GamesCache
     private function loadCacheFile()
     {
         $this->cache = json_decode(file_get_contents($this->cacheFile));
+        $this->games = $this->games();
 
         return true;
     }
@@ -156,9 +157,6 @@ class GamesCache
      */
     private function buildCacheObject()
     {
-        // Merge the cached games with our list of games
-        $this->games = array_merge($this->games(), $this->games);
-
         sort($this->games);
 
         $cache = new \stdClass;
