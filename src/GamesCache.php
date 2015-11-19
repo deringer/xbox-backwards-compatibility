@@ -115,6 +115,28 @@ class GamesCache
 
 
     /**
+     * Get a DateTime of the last time we checked the Xbox site.
+     *
+     * @return DateTime
+     */
+    public function lastUpdated()
+    {
+        return isset($this->cache->updated) ? new \DateTime($this->cache->updated) : null;
+    }
+
+
+    /**
+     * Get a DateTime of the last time the recent games was updated.
+     *
+     * @return DateTime
+     */
+    public function recentLastUpdated()
+    {
+        return isset($this->cache->recent->updated) ? new DateTime($this->cache->recent->updated) : null;
+    }
+
+
+    /**
      * Determine if the cache file exists.
      *
      * @return boolean
@@ -160,11 +182,11 @@ class GamesCache
         sort($this->games);
 
         $cache = new \stdClass;
-        $cache->updated           = time();
-        $cache->games             = $this->games;
-        $cache->recent            = new \stdClass;
-        $cache->recent->timestamp = ( count($this->recent) > 0 ) ? time() : $this->cache->recent->timestamp;
-        $cache->recent->games     = ( count($this->recent) > 0 ) ? $this->recent : $this->cache->recent->games;
+        $cache->updated         = time();
+        $cache->games           = $this->games;
+        $cache->recent          = new \stdClass;
+        $cache->recent->updated = ( count($this->recent) > 0 ) ? time() : $this->cache->recent->updated;
+        $cache->recent->games   = ( count($this->recent) > 0 ) ? $this->recent : $this->cache->recent->games;
 
         return $cache;
     }
