@@ -17,8 +17,12 @@ class Games
 
     public function add($title)
     {
-        foreach ($title as $t) {
-            $this->games[] = $t;
+        if (is_array($title)) {
+            foreach ($title as $t) {
+                $this->games[] = $t;
+            }
+        } else {
+            $this->games[] = $title;
         }
 
         return $this;
