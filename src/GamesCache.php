@@ -15,7 +15,7 @@ class GamesCache
      *
      * @var array
      */
-    protected $games;
+    protected $games = [];
 
 
     /**
@@ -23,7 +23,7 @@ class GamesCache
      *
      * @var array
      */
-    protected $recent;
+    protected $recent = [];
 
     /**
      * Cache file path.
@@ -31,6 +31,13 @@ class GamesCache
      * @var string
      */
     protected $cacheFile;
+
+    /**
+     * Store the cache object.
+     *
+     * @var string
+     */
+    protected $cache;
 
 
     /**
@@ -59,7 +66,7 @@ class GamesCache
      */
     public function gameExists($title)
     {
-        return in_array($title, $this->games);
+        return ! is_null($this->cache) && in_array($title, $this->cache->games);
     }
 
 
@@ -79,19 +86,9 @@ class GamesCache
             }
         }
 
-        // Merge the cached games with our list of games
-        $games = array_merge($this->games(), $this->games);
+        $cache = $this->buildCacheObject();
 
-        sort($this->games);
-
-        $cache = new \stdClass;
-        $cache->updated           = time();
-        $cache->games             = $this->games;
-        $cache->recent            = new \stdClass;
-        $cache->recent->timestamp = ( count($this->recent) > 0 ) ? time() : $this->cache->recent->timestamp;
-        $cache->recent->games     = ( count($this->recent) > 0 ) ? $this->recent : $this->cache->recent->games;
-
-        return @file_put_contents($this->cacheFile, json_encode($cache));
+        return @file_put_contents($this->cacheFile, json_encode($cache, JSON_PRETTY_PRINT));
     }
 
 
@@ -136,7 +133,6 @@ class GamesCache
     private function loadCacheFile()
     {
         $this->cache = json_decode(file_get_contents($this->cacheFile));
-        $this->games = $this->games();
 
         return true;
     }
@@ -150,5 +146,28 @@ class GamesCache
     private function createCacheFile()
     {
         return touch($this->cacheFile);
+    }
+
+
+    /**
+     * Build the object to save to the cache.
+     *
+     * @return stdClass
+     */
+    private function buildCacheObject()
+    {
+        // Merge the cached games with our list of games
+        $this->games = array_merge($this->games(), $this->games);
+
+        sort($this->games);
+
+        $cache = new \stdClass;
+        $cache->updated           = time();
+        $cache->games             = $this->games;
+        $cache->recent            = new \stdClass;
+        $cache->recent->timestamp = ( count($this->recent) > 0 ) ? time() : $this->cache->recent->timestamp;
+        $cache->recent->games     = ( count($this->recent) > 0 ) ? $this->recent : $this->cache->recent->games;
+
+        return $cache;
     }
 }
