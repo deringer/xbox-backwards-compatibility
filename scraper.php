@@ -23,6 +23,16 @@ try {
 
         if ($recent = $cache->recent()) {
             printf('Successfully scraped endpoint for %d new games%s', count($recent), PHP_EOL);
+
+            if ($notification = getenv('NOTIFICATION_EMAIL')) {
+                printf('Sending notification email to %s%s', $notification, PHP_EOL);
+
+                mail(
+                    $notification,
+                    '[Xbox One Backwards Compatibility] Recent games released!',
+                    'The following games have been recently announced to support backwards compatibility' . PHP_EOL . PHP_EOL . join(PHP_EOL, $recent)
+                );
+            }
         }
     } else {
         printf('Could not scrape endpoint for new games%s', PHP_EOL);
