@@ -11,5 +11,10 @@
             "name": "Michael Dyrynda",
             "email": "michael@iatstuti.net"
         }
-    ]
+    ],
+    "autoload": {
+        "psr-4": {
+            "Iatstuti\\XboxOneCompatibility\\": "src/"
+        }
+    }
 }
