@@ -117,7 +117,7 @@ class GamesCache
     /**
      * Get a DateTime of the last time we checked the Xbox site.
      *
-     * @return DateTime
+     * @return DateTime|null
      */
     public function lastUpdated()
     {
@@ -128,7 +128,7 @@ class GamesCache
     /**
      * Get a DateTime of the last time the recent games was updated.
      *
-     * @return DateTime
+     * @return DateTime|null
      */
     public function recentLastUpdated()
     {
