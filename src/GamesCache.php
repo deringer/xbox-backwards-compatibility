@@ -71,6 +71,19 @@ class GamesCache
 
 
     /**
+     * Determine if the given game is recently announced.
+     *
+     * @param  string  $title Title to check
+     *
+     * @return boolean
+     */
+    public function isRecent($title)
+    {
+        return in_array($title, $this->cache->recent->games);
+    }
+
+
+    /**
      * Save the games instance to the cache.
      *
      * @param  Games  $games Games instance to save
@@ -121,7 +134,7 @@ class GamesCache
      */
     public function lastUpdated()
     {
-        return isset($this->cache->updated) ? new \DateTime($this->cache->updated) : null;
+        return isset($this->cache->updated) ? new \DateTime('@' . $this->cache->updated) : null;
     }
 
 
@@ -132,7 +145,7 @@ class GamesCache
      */
     public function recentLastUpdated()
     {
-        return isset($this->cache->recent->updated) ? new DateTime($this->cache->recent->updated) : null;
+        return isset($this->cache->recent->updated) ? new \DateTime('@' . $this->cache->recent->updated) : null;
     }
 
 
