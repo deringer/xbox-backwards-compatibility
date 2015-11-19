@@ -1,0 +1,15 @@
+{
+    "name": "deringer/xbox-backwards-compatibility",
+    "description": "Poll the Australian Xbox website for a list of Xbox One backwards compatible titles and watch for new titles.",
+    "require": {
+        "symfony/dom-crawler": "^2.7",
+        "vlucas/phpdotenv": "^2.1",
+        "symfony/css-selector": "^2.7"
+    },
+    "authors": [
+        {
+            "name": "Michael Dyrynda",
+            "email": "michael@iatstuti.net"
+        }
+    ]
+}
