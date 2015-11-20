@@ -6,8 +6,10 @@ require dirname(__FILE__) . '/../bootstrap.php';
 
 $cache = new GamesCache(getenv('XBOX_BC_GAME_CACHE'));
 
-$lastUpdated       = $cache->lastUpdated()->setTimezone(new \DateTimeZone(getenv('DEFAULT_TIMEZONE')));
-$recentLastUpdated = $cache->recentLastUpdated()->setTimezone(new \DateTimeZone(getenv('DEFAULT_TIMEZONE')));
+$lastUpdated       = $cache->lastUpdated();
+$lastUpdated       = $lastUpdated ? $lastUpdated->setTimezone(new \DateTimeZone(getenv('DEFAULT_TIMEZONE'))) : null;
+$recentLastUpdated = $cache->recentLastUpdated();
+$recentLastUpdated = $recentLastUpdated ? $recentLastUpdated->setTimezone(new \DateTimeZone(getenv('DEFAULT_TIMEZONE'))) : null;
 
 ?>
 <!doctype html>
